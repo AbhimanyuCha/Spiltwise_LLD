@@ -12,6 +12,10 @@ public class DisplayManager {
         userRepo.getAllUsers().stream().forEach(user -> showUser(user));
     }
 
+    void print(User payer, User payee, double val){
+        System.out.println(payer.getName() + " owes " + payee.getName() + " " + val);
+    }
+
     void showUser(User user){
         if(user.getAmountOwedBy().isEmpty())
             System.out.println("No Balances");
@@ -19,10 +23,11 @@ public class DisplayManager {
             user.getAmountOwedBy().entrySet().forEach(userDoubleEntry -> {
                 double val = userDoubleEntry.getValue();
                 User key = userDoubleEntry.getKey();
+
                 if(val < 0)
-                    System.out.println(user.getName() + " owes " + key.getName() + " " + (-1*val));
+                    print(user, key, (-1*val));
                 else if(val > 0)
-                    System.out.println(key.getName() + " owes " + user.getName() + " " + val);
+                    print(key, user, val);
             });
     }
 }
